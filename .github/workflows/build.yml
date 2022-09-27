@@ -24,15 +24,16 @@ jobs:
            DSM_ARCH: "v1000"
          - DSM_VERSION: "7.0"
            DSM_ARCH: "braswell"
+         - DSM_VERSION: "7.1"
+           DSM_ARCH: "v1000"
+         - DSM_VERSION: "7.1"
+           DSM_ARCH: "braswell"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Submodule init
         shell: bash
         run: git submodule init
-      - name: Checkout bitnami recipe
-        shell: bash
-        run: git submodule update containers
       - name: Set up QEMU dependency
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
