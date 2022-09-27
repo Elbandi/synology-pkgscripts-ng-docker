@@ -59,7 +59,7 @@ jobs:
           #   type=raw,value=${{ matrix.VERSION }}
           #   type=raw,value=${{ matrix.VERSION }}-${{ matrix.OS_FLAVOUR }}
           #   type=raw,value=${{ matrix.VERSION }}-${{ matrix.OS_FLAVOUR }}-r${{ matrix.REVISION }}
-          images: ${{ env.REGISTRY }}/${{ steps.repository.outputs.lowercase }}/${{ matrix.DSM_VERSION }}-${{ matrix.DSM_ARCH }}
+          images: ${{ env.REGISTRY }}/${{ steps.repository.outputs.lowercase }}:${{ matrix.DSM_VERSION }}-${{ matrix.DSM_ARCH }}
       # https://stackoverflow.com/questions/58033366/how-to-get-the-current-branch-within-github-actions
       - name: Extract branch name
         shell: bash
@@ -73,5 +73,5 @@ jobs:
         shell: bash
         run: |
           docker buildx create --use --name insecure-builder --buildkitd-flags '--allow-insecure-entitlement security.insecure'
-          docker buildx build --allow security.insecure --pull --push -t ${{ env.REGISTRY }}/${{ steps.repository.outputs.lowercase }}/${{ matrix.DSM_VERSION }}-${{ matrix.DSM_ARCH }} \
+          docker buildx build --allow security.insecure --pull --push -t ${{ env.REGISTRY }}/${{ steps.repository.outputs.lowercase }}:${{ matrix.DSM_VERSION }}-${{ matrix.DSM_ARCH }} \
                  --build-arg _DSM_VERSION=${{ matrix.DSM_VERSION }} --build-arg _DSM_ARCH=${{ matrix.DSM_ARCH }} .
