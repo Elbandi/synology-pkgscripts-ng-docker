@@ -10,19 +10,21 @@ RUN apt-get update && apt-get install -y \
   python3 \
   && rm -rf /var/lib/apt/lists/*
 
-ARG DSM_VERSION=7.1
-ARG DSM_ARCH=v1000
+ARG _DSM_VERSION=7.1
+ARG _DSM_ARCH=v1000
 
 RUN --security=insecure mkdir -p /synology && \
     cd /synology && \
-    git clone -b "DSM${DSM_VERSION}" https://github.com/SynologyOpenSource/pkgscripts-ng && \
-    pkgscripts-ng/EnvDeploy -p $DSM_ARCH -v $DSM_VERSION && \
+    git clone -b "DSM${_DSM_VERSION}" https://github.com/SynologyOpenSource/pkgscripts-ng && \
+    pkgscripts-ng/EnvDeploy -p $_DSM_ARCH -v $_DSM_VERSION && \
     rm -rf toolkit_tarballs
 
 FROM scratch
 
-ARG DSM_VERSION=7.1
-ARG DSM_ARCH=v1000
+ARG _DSM_VERSION=7.1
+ARG _DSM_ARCH=v1000
+ENV DSM_VERSION=${_DSM_VERSION}
+ENV DSM_ARCH=${_DSM_ARCH}
 
-copy --from=pkgscripts /synology/build_env/ds.${DSM_ARCH}-${DSM_VERSION}/ /
+copy --from=pkgscripts /synology/build_env/ds.${_DSM_ARCH}-${_DSM_VERSION}/ /
 copy --from=pkgscripts /synology/pkgscripts-ng/ /pkgscripts-ng/
