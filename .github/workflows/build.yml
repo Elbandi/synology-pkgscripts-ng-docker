@@ -20,14 +20,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-         - DSM_VERSION: "7.0"
-           DSM_ARCH: "v1000"
-         - DSM_VERSION: "7.0"
-           DSM_ARCH: "braswell"
          - DSM_VERSION: "7.1"
-           DSM_ARCH: "v1000"
-         - DSM_VERSION: "7.1"
-           DSM_ARCH: "braswell"
+           DSM_ARCH: "apollolake"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
